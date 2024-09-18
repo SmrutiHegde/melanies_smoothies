@@ -11,16 +11,9 @@ st.write("Choose the fruits you want in your Custom Smoothie!")
 name_on_order=st.text_input('Name on Smoothie:')
 st.write('The name on Smoothie will be:',name_on_order)
 
-# option = st.selectbox(
-#      'What is your favourite fruit?',
-#     ("Banana", "Strawberry", "Peaches"))
-
-# st.write("Your favourite fruit is:", option)
-
 cnx=st.connection("snowflake")
 session = cnx.session()
-# my_dataframe = session.table("smoothies.public.fruit_options")
-# st.dataframe(data=my_dataframe, use_container_width=True)
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('Fruit_name'))
 st.dataframe(data=my_dataframe, use_container_width=True)
 
@@ -39,8 +32,7 @@ if ingredients_list:
              
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order)
             values ('""" + ingredients_string + """','""" + name_on_order + """')"""
-    # st.write(my_insert_stmt)
-    # st.stop()
+   
 
     time_to_insert=st.button('Submit Order')
     
